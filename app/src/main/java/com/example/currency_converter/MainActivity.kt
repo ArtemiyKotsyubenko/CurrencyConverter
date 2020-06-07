@@ -103,16 +103,12 @@ public class MainActivity : AppCompatActivity() {
 
     class CurrencyTask constructor(private var activity: MainActivity) :
         AsyncTask<Void, Void, String>() {
-        //     init {
-//            Toast.makeText(
-//                activity,
-//                "Constructor works\n",//
-//                Toast.LENGTH_LONG
-//            ).show()
-        //       }
-
+        private var str = ""
         override fun onPreExecute() {
             super.onPreExecute()
+            val input: EditText = activity.findViewById(R.id.input)
+            str = input.text.toString()
+
         }
 
 
@@ -130,13 +126,13 @@ public class MainActivity : AppCompatActivity() {
             val nameValue: JSONObject = obj.getJSONObject("rates")
             val valueStr: String = nameValue.getString(activity.second)  //получаем курс
             val rate: Double = valueStr.toDouble()
-            val input: EditText = activity.findViewById(R.id.input)
+            // val input: EditText = activity.findViewById(R.id.input)
 
-            //var inputValue: Double = input.text.toString().toDouble()
-            //var countingresult: Double = (inputValue * rate)
-            var textResult: TextView = activity.findViewById(R.id.textResult)
+            var inputValue: String = str
+            var countingresult: Double = (inputValue.toDouble() * rate)
+            //   var textResult: TextView = activity.findViewById(R.id.textResult)
+            return  countingresult.toString()
 
-            return "some number"
         }
 
         override fun onPostExecute(result: String?) {
