@@ -107,6 +107,12 @@ public class MainActivity : AppCompatActivity() {
         override fun onPreExecute() {
             super.onPreExecute()
             val input: EditText = activity.findViewById(R.id.input)
+            Toast.makeText(
+                activity,
+                input.text.toString(),
+                Toast.LENGTH_LONG
+            ).show()
+
             str = input.text.toString()
 
         }
@@ -130,8 +136,8 @@ public class MainActivity : AppCompatActivity() {
 
             var inputValue: String = str
             var countingresult: Double = (inputValue.toDouble() * rate)
-            //   var textResult: TextView = activity.findViewById(R.id.textResult)
             return  countingresult.toString()
+            //return str
 
         }
 
