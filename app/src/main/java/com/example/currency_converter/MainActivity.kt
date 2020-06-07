@@ -95,47 +95,47 @@ public class MainActivity : AppCompatActivity() {
 //                    "Convert button works\n",//
 //                    Toast.LENGTH_LONG
 //                ).show()
-                val task = CurrencyTask(this)
-                task.execute()
+            val task = CurrencyTask(this)
+            task.execute()
 
         }
     }
 
     class CurrencyTask constructor(private var activity: MainActivity) :
         AsyncTask<Void, Void, String>() {
-   //     init {
+        //     init {
 //            Toast.makeText(
 //                activity,
 //                "Constructor works\n",//
 //                Toast.LENGTH_LONG
 //            ).show()
- //       }
+        //       }
 
-//        override fun onPreExecute() {
-//            super.onPreExecute()
-//        }
+        override fun onPreExecute() {
+            super.onPreExecute()
+        }
 
 
 
         override fun doInBackground(vararg params: Void?): String {
 
-//            val response: Response = khttp.get(
-//                url = "https://api.exchangeratesapi.io/latest",
-//                params = mapOf(
-//                    "symbols" to activity.second,  //должно работать, но это не точно
-//                    "base" to activity.first
-//                )
-//            )
-//            val obj: JSONObject = response.jsonObject
-//            //var valueName = "${obj["rates"]}" получаем название и курс
-//            val nameValue: JSONObject = obj.getJSONObject("rates")
-//            val valueStr: String = nameValue.getString(activity.second)  //получаем курс
-//            val rate: Double = valueStr.toDouble()
-//            val input: EditText = activity.findViewById(R.id.input)
-//            var inputValue: Double = input.text.toString().toDouble()
-//            var countingresult: Double = (inputValue * rate)
-//            var textResult: TextView = activity.findViewById(R.id.textResult)
-//            textResult.text = countingresult.toString()
+            val response: Response = khttp.get(
+                url = "https://api.exchangeratesapi.io/latest",
+                params = mapOf(
+                    "symbols" to activity.second,  //должно работать, но это не точно
+                    "base" to activity.first
+                )           )
+            val obj: JSONObject = response.jsonObject
+            //var valueName = "${obj["rates"]}" получаем название и курс
+            val nameValue: JSONObject = obj.getJSONObject("rates")
+            val valueStr: String = nameValue.getString(activity.second)  //получаем курс
+            val rate: Double = valueStr.toDouble()
+            val input: EditText = activity.findViewById(R.id.input)
+
+            //var inputValue: Double = input.text.toString().toDouble()
+            //var countingresult: Double = (inputValue * rate)
+            var textResult: TextView = activity.findViewById(R.id.textResult)
+
             return "some number"
         }
 
