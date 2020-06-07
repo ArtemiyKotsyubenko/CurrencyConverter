@@ -12,7 +12,7 @@ import org.json.JSONObject
 import java.lang.Exception
 
 
-public class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private var second: String = "CAD"
     private var first: String = "CAD"
 
