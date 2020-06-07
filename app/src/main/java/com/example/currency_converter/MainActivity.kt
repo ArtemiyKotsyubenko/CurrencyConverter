@@ -56,7 +56,7 @@ public class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        var currencyList: Array<String> =            resources.getStringArray(R.array.values_list)
+        var currencyList: Array<String> = resources.getStringArray(R.array.values_list)
 
         buttonConv.setOnClickListener {
             val task = CurrencyTask(this)
@@ -91,7 +91,7 @@ public class MainActivity : AppCompatActivity() {
                 var inputValue: String = str
                 var result: Double = (inputValue.toDouble() * rate)
                 return result.toString()
-            } catch (ex: Exception){
+            } catch (ex: Exception) {
                 return "Can not convert"
             }
 
