@@ -3,14 +3,12 @@ package com.example.currency_converter
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.FileUriExposedException
 import android.view.View
 import android.widget.*
 import khttp.responses.Response
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.spinnerFrom
 import org.json.JSONObject
-import java.util.*
 
 
 public class MainActivity : AppCompatActivity() {
@@ -92,55 +90,59 @@ public class MainActivity : AppCompatActivity() {
         buttonConv.setOnClickListener {
 
             //функции вызываемые нажатием на кнопку
-                Toast.makeText(
-                    this@MainActivity,
-                    "Convert button works\n",//
-                    Toast.LENGTH_LONG
-                ).show()
-                //val task = CurrencyTask(this)
-                //task.execute()
+//                Toast.makeText(
+//                    this@MainActivity,
+//                    "Convert button works\n",//
+//                    Toast.LENGTH_LONG
+//                ).show()
+                val task = CurrencyTask(this)
+                task.execute()
 
         }
     }
 
     class CurrencyTask constructor(private var activity: MainActivity) :
-        AsyncTask<Void, Void, Void>() {
+        AsyncTask<Void, Void, String>() {
+   //     init {
+//            Toast.makeText(
+//                activity,
+//                "Constructor works\n",//
+//                Toast.LENGTH_LONG
+//            ).show()
+ //       }
 
-        override fun onPreExecute() {
-            super.onPreExecute()
-            Toast.makeText(
-                activity,
-                "pre\n",//
-                Toast.LENGTH_LONG
-            ).show()
+//        override fun onPreExecute() {
+//            super.onPreExecute()
+//        }
 
-            val response: Response = khttp.get(
-                url = "https://api.exchangeratesapi.io/latest",
-                params = mapOf(
-                    "symbols" to activity.second,  //должно работать, но это не точно
-                    "base" to activity.first
-                )
-            )
-            val obj: JSONObject = response.jsonObject
-            //var valueName = "${obj["rates"]}" получаем название и курс
-            val nameValue: JSONObject = obj.getJSONObject("rates")
-            val valueStr: String = nameValue.getString(activity.second)  //получаем курс
-            val rate: Double = valueStr.toDouble()
-            val input: EditText = activity.findViewById(R.id.input)
-            var inputValue: Double = input.text.toString().toDouble()
-            var countingresult: Double = (inputValue * rate)
-            var textResult: TextView = activity.findViewById(R.id.textResult)
-            textResult.text = countingresult.toString()
+
+
+        override fun doInBackground(vararg params: Void?): String {
+
+//            val response: Response = khttp.get(
+//                url = "https://api.exchangeratesapi.io/latest",
+//                params = mapOf(
+//                    "symbols" to activity.second,  //должно работать, но это не точно
+//                    "base" to activity.first
+//                )
+//            )
+//            val obj: JSONObject = response.jsonObject
+//            //var valueName = "${obj["rates"]}" получаем название и курс
+//            val nameValue: JSONObject = obj.getJSONObject("rates")
+//            val valueStr: String = nameValue.getString(activity.second)  //получаем курс
+//            val rate: Double = valueStr.toDouble()
+//            val input: EditText = activity.findViewById(R.id.input)
+//            var inputValue: Double = input.text.toString().toDouble()
+//            var countingresult: Double = (inputValue * rate)
+//            var textResult: TextView = activity.findViewById(R.id.textResult)
+//            textResult.text = countingresult.toString()
+            return "some number"
         }
 
-
-        override fun doInBackground(vararg params: Void?): Void? {
-            Toast.makeText(
-                activity,
-                "back\n",//
-                Toast.LENGTH_LONG
-            ).show()
-            return null
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            var textResult: TextView = activity.findViewById(R.id.textResult)
+            textResult.text = result
         }
     }
 }
