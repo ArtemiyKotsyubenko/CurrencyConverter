@@ -1,5 +1,4 @@
 package com.example.currency_converter
-
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_main.spinnerFrom
 import org.json.JSONObject
 import java.util.*
 
-
 public class MainActivity : AppCompatActivity() {
     private var second :String = "USD"
     private var first: String = "EUR"
@@ -20,8 +18,6 @@ public class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
 
         var currencyList: Array<String> =
             resources.getStringArray(R.array.values_list) // обьявляем массив с названиями валют
@@ -81,9 +77,6 @@ public class MainActivity : AppCompatActivity() {
 
         }
 
-
-
-
         buttonConv.setOnClickListener {
             //функции вызываемые нажатием на кнопку
             fun onClick(p: View?) {
@@ -94,9 +87,8 @@ public class MainActivity : AppCompatActivity() {
         }
     }
 
-
     class CurrencyTask constructor(private var activity: MainActivity) :
-        AsyncTask<MainActivity, Void, Void>() {
+        AsyncTask<Void, Void, Void>() {
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -104,8 +96,8 @@ public class MainActivity : AppCompatActivity() {
             val response: Response = khttp.get(
                 url = "https://api.exchangeratesapi.io/latest",
                 params = mapOf(
-                    "symbols" to "${activity.second}",  //должно работать, но это не точно
-                    "base" to "${activity.first}"
+                    "symbols" to activity.second,  //должно работать, но это не точно
+                    "base" to activity.first
                 )
             )
             val obj: JSONObject = response.jsonObject
@@ -115,26 +107,12 @@ public class MainActivity : AppCompatActivity() {
             val rate: Double = valueStr.toDouble()
             val input: EditText = activity.findViewById(R.id.input)
             //var result: Double = (input * rate).toString()
-            //return result
+            //val input: EditText = activity.findViewById(R.id.input)
+            var inputValue:Double = input.text.toString().toDouble()
         }
 
-
-//        override fun onPostExecute(result: String?) {
-//            super.onPostExecute(result)
-//            var textResult: TextView = findViewById(R.id.textResult)
-//            textResult.text = result
-//        }
-
-
-        override fun doInBackground(vararg params: MainActivity?): Void {
-            TODO("Not yet implemented")
+        override fun doInBackground(vararg params: Void?): Void? {
+            return null
         }
     }
-
-
 }
-
-
-//  Toast.makeText(
-// this, "Spinner 1 " + spinnerFrom.selectedItem.toString() +
-//       "\nSpinner 2 " + spinnerTo.selectedItem.toString(), Toast.LENGTH_LONG) }
