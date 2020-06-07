@@ -1,4 +1,5 @@
 package com.example.currency_converter
+
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,79 +12,94 @@ import kotlinx.android.synthetic.main.activity_main.spinnerFrom
 import org.json.JSONObject
 import java.util.*
 
+
 public class MainActivity : AppCompatActivity() {
-    private var second :String = "USD"
-    private var first: String = "EUR"
+    var second: String = "USD"
+    var first: String = "EUR"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.values_list,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerFrom.adapter = adapter
+        spinnerTo.adapter = adapter
+
+        spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "reading value by spinner1 is correct\n",//
+                    Toast.LENGTH_LONG
+                ).show()
+                first = spinnerFrom.selectedItem.toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                //var first: String = "EUR"
+                Toast.makeText(
+                    this@MainActivity,
+                    "ничего не выбрано, первая валюта - евро",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        spinnerTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "reading value by spinner2 is correct\n",//
+                    Toast.LENGTH_LONG
+                ).show()
+                second = spinnerTo.selectedItem.toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+//                Toast.makeText(
+//                    this@MainActivity,
+//                    "???\n",//
+//                    Toast.LENGTH_LONG
+//                ).show()
+                //var first: String = "USD"
+                Toast.makeText(
+                    this@MainActivity,
+                    "ничего не выбрано, вторая валюта - доллар",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
         var currencyList: Array<String> =
             resources.getStringArray(R.array.values_list) // обьявляем массив с названиями валют
 
-        fun setUpSpinner() {
-            val adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.values_list,
-                android.R.layout.simple_spinner_item
-            )
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerFrom.adapter = adapter
-            spinnerTo.adapter = adapter
-
-            spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    first = spinnerFrom.selectedItem.toString()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    //var first: String = "EUR"
-                    Toast.makeText(
-                        this@MainActivity,
-                        "ничего не выбрано, первая валюта - евро",
-                        Toast.LENGTH_LONG
-                    )
-                }
-            }
-
-            spinnerTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    second = spinnerTo.selectedItem.toString()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    //var first: String = "USD"
-                    Toast.makeText(
-                        this@MainActivity,
-                        "ничего не выбрано, вторая валюта - доллар",
-                        Toast.LENGTH_LONG
-                    )
-                }
-
-            }
-
-        }
-
         buttonConv.setOnClickListener {
+
             //функции вызываемые нажатием на кнопку
-            fun onClick(p: View?) {
-                setUpSpinner()
-                val task = CurrencyTask(this)
-                task.execute()
-            }
+                Toast.makeText(
+                    this@MainActivity,
+                    "Convert button works\n",//
+                    Toast.LENGTH_LONG
+                ).show()
+                //val task = CurrencyTask(this)
+                //task.execute()
+
         }
     }
 
@@ -92,6 +108,11 @@ public class MainActivity : AppCompatActivity() {
 
         override fun onPreExecute() {
             super.onPreExecute()
+            Toast.makeText(
+                activity,
+                "pre\n",//
+                Toast.LENGTH_LONG
+            ).show()
 
             val response: Response = khttp.get(
                 url = "https://api.exchangeratesapi.io/latest",
@@ -106,12 +127,19 @@ public class MainActivity : AppCompatActivity() {
             val valueStr: String = nameValue.getString(activity.second)  //получаем курс
             val rate: Double = valueStr.toDouble()
             val input: EditText = activity.findViewById(R.id.input)
-            //var result: Double = (input * rate).toString()
-            //val input: EditText = activity.findViewById(R.id.input)
-            var inputValue:Double = input.text.toString().toDouble()
+            var inputValue: Double = input.text.toString().toDouble()
+            var countingresult: Double = (inputValue * rate)
+            var textResult: TextView = activity.findViewById(R.id.textResult)
+            textResult.text = countingresult.toString()
         }
 
+
         override fun doInBackground(vararg params: Void?): Void? {
+            Toast.makeText(
+                activity,
+                "back\n",//
+                Toast.LENGTH_LONG
+            ).show()
             return null
         }
     }
