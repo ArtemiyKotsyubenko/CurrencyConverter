@@ -9,6 +9,7 @@
     <string name="hint_value">1</string>
     <string name="inputText"/>
     <string name="valueFrom">Currency №1:</string>
+    <string name="_0">0</string>
 
 
     <string-array name="values_list">

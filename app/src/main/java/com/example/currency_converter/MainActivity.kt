@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.spinnerFrom
 import org.json.JSONObject
 import java.lang.Exception
+import kotlin.math.round
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,8 +34,7 @@ class MainActivity : AppCompatActivity() {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,
-                position: Int,
-                id: Long
+                position: Int, id: Long
             ) {
                 first = spinnerFrom.selectedItem.toString()
             }
@@ -87,8 +87,9 @@ class MainActivity : AppCompatActivity() {
                 val rate: Double = valueStr.toDouble()
 
                 val inputValue: String = str
-                val result: Double = (inputValue.toDouble() * rate)
-                return result.toString()
+                val result: Double = round(inputValue.toDouble() * rate * 100) / 100
+                return "Exchange rate " + activity.first + " to " + activity.second + " = " +
+                        valueStr + "\n" + "After exchange: " + result.toString()
             } catch (ex: Exception) {
                 return "Can not convert"
             }
